@@ -2,9 +2,9 @@
 // but the sounds are made live with Web Audio so the demo needs no sample files.
 (function () {
   var box = document.currentScript && document.currentScript.previousElementSibling;
-  if (!box || !box.classList.contains('ad-drums')) { return; }
-  var grid = box.querySelector('.ad-drums__pads');
-  var lcd = box.querySelector('.ad-drums__lcd');
+  if (!box || !box.classList.contains('cx-drums')) { return; }
+  var grid = box.querySelector('.cx-drums__pads');
+  var lcd = box.querySelector('.cx-drums__lcd');
 
   var PADS = [
     { id: 'Num', codes: ['NumLock', 'NumpadClear'], sound: 'lowTom', name: 'Low Tom', kind: 'drum' },
@@ -70,8 +70,8 @@
   PADS.forEach(function (p, i) {
     var b = document.createElement('button');
     b.type = 'button';
-    b.className = 'ad-pad ad-pad--' + p.kind + (p.cls ? ' ad-pad--' + p.cls : '');
-    b.innerHTML = '<span class="ad-pad__key">' + p.id + '</span><span class="ad-pad__name">' + p.name + '</span>';
+    b.className = 'cx-pad cx-pad--' + p.kind + (p.cls ? ' cx-pad--' + p.cls : '');
+    b.innerHTML = '<span class="cx-pad__key">' + p.id + '</span><span class="cx-pad__name">' + p.name + '</span>';
     b.setAttribute('aria-label', p.name + ' (key ' + p.id + ')');
     b.addEventListener('pointerdown', function (e) { e.preventDefault(); hit(i); });
     b.addEventListener('keydown', function (e) { if (e.key === ' ') { e.preventDefault(); hit(i); } });

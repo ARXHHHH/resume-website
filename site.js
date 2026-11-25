@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var fine = matchMedia('(pointer: fine)').matches;
 
   // Move the fixed layers to <body> so they sit outside Elementor's sections.
-  ['.ad-liquid', '.ad-hud'].forEach(function (sel) {
+  ['.cx-liquid', '.cx-hud'].forEach(function (sel) {
     var el = document.querySelector(sel);
     if (el) { document.body.insertBefore(el, document.body.firstChild); }
   });
@@ -187,12 +187,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   (function startLiquid() {
-    var canvas = document.querySelector('.ad-liquid canvas');
+    var canvas = document.querySelector('.cx-liquid canvas');
     if (!canvas || reduce) { if (canvas) { canvas.hidden = true; } return; }
     var coarse = matchMedia('(pointer: coarse)').matches;
     var fluid = createFluid(canvas, coarse ? 96 : 128, coarse ? 480 : 720);
     if (!fluid) { canvas.hidden = true; return; }
-    root.classList.add('ad-liquid-on');
+    root.classList.add('cx-liquid-on');
 
     var frame = 0, lastTime = 0, lastActivity = 0, last = null, hue = Math.random(), queued = [];
 
@@ -253,13 +253,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ---------- 2 + 3. Scroll: XP bar, chapter label, sideways side quests ---------- */
 
-  var fill = document.querySelector('.ad-xp__fill');
-  var player = document.querySelector('.ad-xp__player');
-  var label = document.querySelector('.ad-hud__chapter');
+  var fill = document.querySelector('.cx-xp__fill');
+  var player = document.querySelector('.cx-xp__player');
+  var label = document.querySelector('.cx-hud__chapter');
   var chapters = [['boot', 'BOOT'], ['origin', 'ORIGIN'], ['missions', 'MISSIONS'], ['projects', 'SIDE QUESTS'], ['loadout', 'LOADOUT'], ['contact', 'NEXT MISSION']];
 
   var quest = document.getElementById('projects');
-  var track = quest && quest.querySelector('.ad-row');
+  var track = quest && quest.querySelector('.cx-row');
   var stage = quest && quest.querySelector(':scope > .e-con-inner');
   var sideways = matchMedia('(min-width: 1025px)');
   var travel = 0;
@@ -269,28 +269,28 @@ document.addEventListener("DOMContentLoaded", function () {
   var BUG_NAMES = ['BUG', '404', 'NaN', 'NULL'];
   function buildMaze() {
     maze = document.createElement('div');
-    maze.className = 'ad-maze';
+    maze.className = 'cx-maze';
     maze.setAttribute('aria-hidden', 'true');
-    maze.innerHTML = '<div class="ad-maze__lane"></div><div class="ad-maze__score">SCORE 000000</div>';
+    maze.innerHTML = '<div class="cx-maze__lane"></div><div class="cx-maze__score">SCORE 000000</div>';
     var lane = maze.firstChild;
     var bugAt = [0.2, 0.42, 0.64, 0.86];
     for (var i = 0; i < 48; i++) {
       var x = 0.04 + i * (0.94 / 47);
       if (bugAt.some(function (b) { return Math.abs(b - x) < 0.02; })) { continue; }
-      var d = document.createElement('i'); d.className = 'ad-pellet'; d.style.left = (x * 100) + '%';
+      var d = document.createElement('i'); d.className = 'cx-pellet'; d.style.left = (x * 100) + '%';
       lane.appendChild(d); pellets.push({ el: d, x: x });
     }
     bugAt.forEach(function (x, i) {
-      var b = document.createElement('b'); b.className = 'ad-bug'; b.textContent = BUG_NAMES[i]; b.style.left = (x * 100) + '%';
+      var b = document.createElement('b'); b.className = 'cx-bug'; b.textContent = BUG_NAMES[i]; b.style.left = (x * 100) + '%';
       lane.appendChild(b); bugs.push({ el: b, x: x });
     });
-    chomper = document.createElement('div'); chomper.className = 'ad-chomper';
+    chomper = document.createElement('div'); chomper.className = 'cx-chomper';
     lane.appendChild(chomper);
     scoreEl = maze.lastChild;
     stage.appendChild(maze);
   }
   function popup(text, x) {
-    var p = document.createElement('span'); p.className = 'ad-xp-pop'; p.textContent = text; p.style.left = (x * 100) + '%';
+    var p = document.createElement('span'); p.className = 'cx-xp-pop'; p.textContent = text; p.style.left = (x * 100) + '%';
     maze.firstChild.appendChild(p);
     setTimeout(function () { p.remove(); }, 900);
   }
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function setupSideways() {
     if (!quest || !track || !stage) { return; }
     var on = sideways.matches && !reduce;
-    root.classList.toggle('ad-sideways', on);
+    root.classList.toggle('cx-sideways', on);
     if (!on) { quest.style.height = ''; track.style.transform = ''; return; }
     if (!maze) { buildMaze(); }
     travel = Math.max(0, track.scrollWidth - stage.clientWidth + 80);
@@ -338,7 +338,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     label.textContent = 'CH 0' + cur + ' / 05 · ' + chapters[cur][1];
 
-    if (root.classList.contains('ad-sideways') && travel > 0) {
+    if (root.classList.contains('cx-sideways') && travel > 0) {
       var r = quest.getBoundingClientRect();
       var q = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
       track.style.transform = 'translateX(' + (-q * travel) + 'px)';
